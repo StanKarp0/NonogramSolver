@@ -1,6 +1,6 @@
 package solver
 
-import akka.actor.ActorSystem
+import akka.actor.{ActorSystem, Props}
 import akka.pattern.ask
 import akka.util.Timeout
 import org.scalatest.{FlatSpec, Matchers}
@@ -15,17 +15,30 @@ class ActorSpec  extends FlatSpec with Matchers {
 
   import BoardImplSpec._
 
-  " Nonogram actors" should " g " in {
+  " Nonogram actors small " should " g " in {
 
-    val board = new BoardImpl(columns, rows)
     val system = ActorSystem("system")
-    val master = system.actorOf(Master.props(board),"master")
+    val master = system.actorOf(Props[Master],"master")
     implicit val timeout = Timeout(5.seconds)
-    val future = master ? Master.Task(board)
+    val future = master ? Master.Task(columns, rows)
     future.collect{
-      case Master.Task(res) => res
+      case Master.Result(res) => res
     }.foreach{res =>
-      List.range(0, res.height).map(res.rowFields) should contain theSameElementsInOrderAs result
+      res should contain theSameElementsInOrderAs result
+      system.terminate()
+    }
+  }
+
+  " Nonogram actors medium " should " g " in {
+
+    val system = ActorSystem("system")
+    val master = system.actorOf(Props[Master],"master")
+    implicit val timeout = Timeout(5.seconds)
+    val future = master ? Master.Task(columns2, rows2)
+    future.collect{
+      case Master.Result(res) => res
+    }.foreach{res =>
+      res should contain theSameElementsInOrderAs result2
       system.terminate()
     }
   }

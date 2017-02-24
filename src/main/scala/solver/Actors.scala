@@ -49,25 +49,21 @@ class Master extends Actor {
     case _ => false
   }
 
-  /*override def preStart(): Unit = {
-    super.preStart()
-    (Iterator.range(0, board.width).map(Column) ++ Iterator.range(0, board.height).map(Row))
-      .foreach(sendPosition)
-  }*/
   def end(): Unit = {
     (boardOpt, actorResp) match {
-      case (Some(b), Some(a)) => a ! Task(b)
+      case (Some(b), Some(a)) => a ! Result(List.range(0,b.height).map(b.rowFields))
       case _ =>
     }
   }
 
 
   def receive: PartialFunction[Any, Unit] = {
-    case Task(b) =>
-      boardOpt = Some(b)
+    case Task(columns, rows) =>
+      val board = new BoardImpl(columns, rows)
+      boardOpt = Some(board)
       actorResp = Some(sender())
-      cnt = b.height + b.width
-      (Iterator.range(0, b.width).map(Column) ++ Iterator.range(0, b.height).map(Row))
+      cnt = board.height + board.width
+      (Iterator.range(0, board.width).map(Column) ++ Iterator.range(0, board.height).map(Row))
         .foreach(sendPosition)
 
     case WorkResult(list, c@ Column(x)) => boardOpt.foreach{ board =>
@@ -95,8 +91,8 @@ object Master {
   case class Column(index: Int) extends Position
   case class Row(index: Int) extends Position
 
-  def props(board: Board): Props = Props[Master]
   case class WorkResult(list: List[Field], position: Position)
-  case class Task(board: Board)
+  case class Task(columns: List[List[Int]], rows: List[List[Int]])
+  case class Result(res: List[List[Field]])
 
 }

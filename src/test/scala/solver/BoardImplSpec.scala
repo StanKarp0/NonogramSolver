@@ -72,4 +72,61 @@ object BoardImplSpec {
     convert((2,W),(1,A),(4,W),(2,A))
   )
 
+
+  val columns2 = List(
+    List(1,2,2,1,2),
+    List(2,1,1,1,5),
+    List(1,1,1,2,2,1),
+    List(1,1,4,1,1),
+    List(6,1),
+    List(4,3,2),
+    List(1,1,1,3),
+    List(1,1,1,1,6),
+    List(3,4,2,2),
+    List(3,2,4,1,1),
+    List(2,4,3),
+    List(2,1,1,2),
+    List(2,2,1,2),
+    List(4,1,1,3,1),
+    List(1,2,1,4)
+  )
+
+   val rows2 = List(
+     List(3,2,4),
+     List(1,1,3,3),
+     List(4,2,2),
+     List(4,2),
+     List(6,5),
+     List(1,1,5,2),
+     List(2,2,1,1),
+     List(1,12),
+     List(2,1,1,2),
+     List(1,4,2),
+     List(4,4,3),
+     List(2,1,2),
+     List(1,1,5,1),
+     List(2,5,2,1),
+     List(4,3,3,1)
+   )
+
+  val result2 = List(
+    convert((3,A),(5,W),(2,A),(1,W),(4,A)),
+    convert((1,W),(1,A),(3,W),(1,A),(1,W),(3,A),(1,W),(3,A),(1,W)),
+    convert((2,W),(4,A),(2,W),(2,A),(3,W),(2,A)),
+    convert((4,W),(4,A),(5,W),(2,A)),
+    convert((6,A),(2,W),(5,A),(2,W)),
+    convert((1,A),(3,W),(1,A),(1,W),(5,A),(1,W),(2,A),(1,W)),
+    convert((1,W),(2,A),(1,W),(2,A),(2,W),(1,A),(5,W),(1,A)),
+    convert((1,A),(1,W),(12,A),(1,W)),
+    convert((2,A),(1,W),(1,A),(1,W),(1,A),(3,W),(2,A),(4,W)),
+    convert((3,W),(1,A),(3,W),(4,A),(1,W),(2,A),(1,W)),
+    convert((4,A),(3,W),(4,A),(1,W),(3,A)),
+    convert((1,W),(2,A),(4,W),(1,A),(5,W),(2,A)),
+    convert((1,W),(1,A),(1,W),(1,A),(2,W),(5,A),(3,W),(1,A)),
+    convert((2,A),(2,W),(5,A),(1,W),(2,A),(2,W),(1,A)),
+    convert((4,A),(1,W),(3,A),(1,W),(3,A),(1,W),(1,A),(1,W))
+  )
+
+
+
 }
